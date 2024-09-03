@@ -1,6 +1,7 @@
 package edu.sjsu.assignment0;
 
-import java.util.function.BiFunction;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -31,10 +32,10 @@ public class Main {
             }
         }
 
-        public Number chainOperations(Number initialValue, BiFunction<Number, Number, Number>... operations) {
+        public Number chainOperations(Number initialValue, Operation[] operations, Number[] operands) {
             Number result = initialValue;
-            for (BiFunction<Number, Number, Number> operation : operations) {
-                result = operation.apply(result, result);
+            for (int i = 0; i < operations.length; i++) {
+                result = calculate(operations[i], result, operands[i]);
             }
             return result;
         }

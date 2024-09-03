@@ -42,4 +42,57 @@ public class UnitTest {
             calculator.calculate(null, 6, 3);
         });
     }
+
+    @Test
+    public void testChainingOperations() {
+        // Starting with 5, add 3, then multiply by 2
+        Main.Operation[] operations = {
+                Main.Operation.ADD,
+                Main.Operation.MULTIPLY
+        };
+
+        Number[] operands = {3, 2};
+
+        Number initialValue = 5;
+        Number expected = 16;
+
+        Number result = calculator.chainOperations(initialValue, operations, operands);
+
+        assertEquals(expected.doubleValue(), result.doubleValue(), "Chained operations should result in 16");
+    }
+
+    @Test
+    public void testChainingOperationsWithDifferentOperations() {
+        // Starting with 10, subtract 2, then divide by 4
+        Main.Operation[] operations = {
+                Main.Operation.SUBTRACT,
+                Main.Operation.DIVIDE
+        };
+
+        Number[] operands = {2, 4};
+
+        Number initialValue = 10;
+        Number expected = 2;
+
+        Number result = calculator.chainOperations(initialValue, operations, operands);
+
+        assertEquals(expected.doubleValue(), result.doubleValue(), "Chained operations should result in 2");
+    }
+
+    @Test
+    public void testChainingOperationsWithZeroDivision() {
+        // Starting with 10, subtract 2, then try to divide by 0
+        Main.Operation[] operations = {
+                Main.Operation.SUBTRACT,
+                Main.Operation.DIVIDE
+        };
+
+        Number[] operands = {2, 0};
+
+        Number initialValue = 10;
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            calculator.chainOperations(initialValue, operations, operands);
+        }, "Division by zero should throw an IllegalArgumentException");
+    }
 }
